@@ -4,8 +4,13 @@ set -e
 . "${SCRIPTDIR}/config.sh"
 
 # Start FreeRadius
-
-while [ ! -f "${INITFINISHED}" ]; do sleep 1; done
+# Check if initialization is necessary
+if [ ! -f "${INITFINISHED}" ]; then
+    /usr/bin/printf "Initialization not performed. Running managecerts.sh...\n"
+    ./managecerts.sh
+else
+    /usr/bin/printf "Initialization already performed. Skipping managecerts.sh.\n"
+fi
 
 cd /etc/raddb
 
