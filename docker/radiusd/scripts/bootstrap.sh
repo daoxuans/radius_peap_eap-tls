@@ -4,7 +4,7 @@ set -e
 . config.sh
 
 chmod 500 managecerts.sh backup.sh manageusers.sh manageclients.sh
-chown root:radius start.sh config.sh sharedfunctions.sh && chmod 550 start.sh config.sh sharedfunctions.sh
+chmod 550 start.sh config.sh sharedfunctions.sh
 
 # Exit if environment variable NO_PREPARE is set
 [ -n "${NO_PREPARE}" ] && echo "NO_PREPARE is set, cancelling bootstrap" && \
