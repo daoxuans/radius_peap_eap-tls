@@ -1,5 +1,5 @@
 Steps to upgrade to a new version:
-- In the current environment, start a root shell by running: `./scripts/start_management.sh`
+- In the current environment, start a root shell by running: `./scripts/cli_management.sh`
 - Make a backup by running: `./backup.sh`
 - Exit the root shell
 - Backup the changes to the environment file with: `diff -u ./templates/env.j2 .env > ./backup/env.patch`
@@ -7,7 +7,7 @@ Steps to upgrade to a new version:
 - Remove the current service by running `./scripts/clean.sh`
 - Rename the repository and do a `git clone` again to get a fresh copy.
 - Enter the repository and checkout the branch or version you need, e.g.: `git checkout v3.0.25`
-- Run `./scripts/init.sh` to create some directories and create the .env file.
+- Run `./scripts/setup_config.sh` to create some directories and create the .env file.
 - Copy the `env.patch` into the repository and place the backup file in `./backup`
 - Customize the .env file by running: `patch -b .env < env.patch`
 - Check the `.env` and the `.env.rej` file (if it exists) to see if configuration has succeeded.

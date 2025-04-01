@@ -1,7 +1,7 @@
 # Backup of FreeRadius configuration
 
 The configuration of the FreeRadius server is stored on a docker volume. A backup of this data can be made by running the provided backup.sh script:
-- Run `./scripts/start_management.sh` as root (or with sudo) in the main directory of this repository
+- Run `./scripts/cli_management.sh` as root (or with sudo) in the main directory of this repository
 - Run `./backup.sh`
 - Close the shell
 
