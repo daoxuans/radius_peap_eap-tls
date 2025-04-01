@@ -44,10 +44,11 @@ set_password_in_eap_config() {
 
 set_generic_attributes() {
 # Parameters: sectionname($1), file($2), email($3)
-    EMAIL=${4:-freeradius@localhost}
+    EMAIL=${4:-radius@localhost}
     set_value_in_section "$1" countryName "${COUNTRYNAME}" "${2}"
+    set_value_in_section "$1" stateOrProvinceName Jiangsu "${2}"
     set_value_in_section "$1" localityName "${LOCALITYNAME}" "${2}"
-    set_value_in_section "$1" organizationName FreeRadiusUser "${2}"
+    set_value_in_section "$1" organizationName NACLab "${2}"
     set_value_in_section "$1" emailAddress "${EMAIL}" "${2}"
 }
 
@@ -57,7 +58,7 @@ configure_uri_crl() {
     # This can be combined with this Radius server
     # $1 is name of config file
 
-    set_value crlDistributionPoints "URI:http:\/\/${RADIUS_HOST}\/wifi_ca.crl" "${1}"
+    set_value crlDistributionPoints "URI:http:\/\/${RADIUS_HOST}\/nac_ca.crl" "${1}"
 }
 
 # Check if init is necessary
@@ -99,7 +100,7 @@ add_value_in_section v3_ca nameConstraints "critical, permitted;DNS:${DOMAIN}" \
 # Configure URI for CRL
 # According to Freeradius documentation this CRL should exist
 # This can be combined with this Radius server
-#set_value crlDistributionPoints "URI:http:\/\/${RADIUS_HOST}\/wifi_ca.crl" ${CACONFIG}
+#set_value crlDistributionPoints "URI:http:\/\/${RADIUS_HOST}\/nac_ca.crl" ${CACONFIG}
 configure_uri_crl "${CACONFIG}"
 
 # Set Certificate Authority password
@@ -112,7 +113,7 @@ set_password "${CAPASSWORD}" "${CACONFIG}"
 
 # Set CA attributes
 # Add a datecode to commonName to make it possible to distinguish multiple CA's
-set_value_in_section certificate_authority commonName "\"Wifi Certificate Authority ${DATECODE}\"" "${CACONFIG}"
+set_value_in_section certificate_authority commonName "\"NAC Certificate Authority ${DATECODE}\"" "${CACONFIG}"
 set_generic_attributes certificate_authority "${CACONFIG}"
 
 # Generate CA
@@ -127,7 +128,7 @@ generate_crl "${CAPASSWORD}"
 set_lifetime "${CA_LIFETIME}" "${CRL_LIFETIME}" "${SRVCONFIG}"
 
 # Configure the server certificate
-SERVERNAME="Radius server ${DATECODE}"
+SERVERNAME="nac server"
 PWDSRV=$(password)
 set_password "${PWDSRV}" "${SRVCONFIG}"
 set_password_in_eap_config "${PWDSRV}"

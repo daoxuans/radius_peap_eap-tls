@@ -45,7 +45,7 @@
  		#  *one* CA certificate.
  		#
 -		ca_file = ${cadir}/ca.pem
-+		ca_file = ${cadir}/wifi_ca_crl.pem
++		ca_file = ${cadir}/nac_ca_crl.pem
  
  	 	#  OpenSSL will automatically create certificate chains,
  	 	#  unless we tell it to not do that.  The problem is that
