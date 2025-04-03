@@ -37,6 +37,13 @@ copy_generic_to_provision() {
         /bin/chmod 444 "${CAPROVISION}"
     fi
 
+    # Copy CA certificate (PEM)
+    if [ ! -f "${CAPEMPROVISION}" ]
+    then
+        /bin/cp "${CACERTPEM}" "${CAPEMPROVISION}"
+        /bin/chmod 444 "${CAPEMPROVISION}"
+    fi
+
     # Reconstruct file with Radius server name for configs generated
     # with older vesions
     if [ ! -f "${RADIUSSERVERFILE}" ]

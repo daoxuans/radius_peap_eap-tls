@@ -47,12 +47,22 @@ printf "请输入城市名称 [默认: %s]: " "$DEFAULT_LOCALITYNAME"
 read -r LOCALITYNAME
 LOCALITYNAME=${LOCALITYNAME:-$DEFAULT_LOCALITYNAME}
 
+printf "\nnRadius服务启动配置:\n"
+printf "是否启用调试模式 (yes/no) [默认: no]: "
+read -r DEBUG_ENABLE
+DEBUG_ENABLE=${DEBUG_ENABLE:-no}
+if [ "$DEBUG_ENABLE" = "yes" ]; then
+    sed -i "s|# DEBUG=yes|DEBUG=yes|g" ./.env
+else
+    sed -i "s|DEBUG=yes|# DEBUG=yes|g" ./.env
+fi
+
 # 更新 .env 文件 (Linux 语法)
-sed -i "s|TZ={{ timezone }}|TZ=$TZ|g" ./.env
-sed -i "s|RADIUS_IP={{ ip }}|RADIUS_IP=$RADIUS_BIND_IP|g" ./.env
-sed -i "s|RADIUS_HOST={{ hostname }}|RADIUS_HOST=$RADIUS_HOST|g" ./.env
-sed -i "s|COUNTRYNAME={{ country }}|COUNTRYNAME=$COUNTRYNAME|g" ./.env
-sed -i "s|LOCALITYNAME={{ city }}|LOCALITYNAME=$LOCALITYNAME|g" ./.env
+sed -i "s|^TZ={{ timezone }}|TZ=$TZ|g" ./.env
+sed -i "s|^RADIUS_IP={{ ip }}|RADIUS_IP=$RADIUS_BIND_IP|g" ./.env
+sed -i "s|^RADIUS_HOST={{ hostname }}|RADIUS_HOST=$RADIUS_HOST|g" ./.env
+sed -i "s|^COUNTRYNAME={{ country }}|COUNTRYNAME=$COUNTRYNAME|g" ./.env
+sed -i "s|^LOCALITYNAME={{ city }}|LOCALITYNAME=$LOCALITYNAME|g" ./.env
 
 printf "\n===== .env 文件配置完成 =====\n"
 printf "配置已保存到 .env 文件。如需修改，可以直接编辑该文件。\n"
